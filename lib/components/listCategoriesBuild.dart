@@ -1,27 +1,41 @@
-import 'package:dirrocha_ecommerce/components/buttonWithIcon.dart';
-import 'package:dirrocha_ecommerce/entitites/item.entity.dart';
-import 'package:dirrocha_ecommerce/services/validarItem/validar.service.dart';
+import 'dart:math';
+import 'package:dirrocha_ecommerce/components/itemCategories.dart';
 import 'package:flutter/material.dart';
-import 'package:dirrocha_ecommerce/components/item.dart';
 import 'package:go_router/go_router.dart';
 
-class ItemGrid extends StatefulWidget {
+class ItemGridCategories extends StatefulWidget {
   final bool activateButtom;
-  final List? futureItems;
+  final List<String>? futureItems;
 
-  const ItemGrid({super.key, this.futureItems, this.activateButtom = true});
+  const ItemGridCategories(
+      {super.key, this.futureItems, this.activateButtom = true});
 
   @override
-  State<ItemGrid> createState() => _ItemGridState();
+  State<ItemGridCategories> createState() => _ItemGridCategoriesState();
 }
 
-class _ItemGridState extends State<ItemGrid> {
+class _ItemGridCategoriesState extends State<ItemGridCategories> {
   int count = 6;
+  final Random _random = Random();
+
+  final List<Color> _colorOptions = const [
+    Color(0xFFEFF8F2), // Cor 1
+    Color(0xFFFFF6EE), // Cor 2
+    Color(0xFFFDE8E4), // Cor 3
+    Color(0xFFF4EBF7), // Cor 4
+    Color(0xFFFEF8E5), // Cor 5
+    Color(0xFFEDF7FC), // Cor 6
+  ];
 
   void incrementCount() {
     setState(() {
       count += 6;
     });
+  }
+
+  Color _getRandomColor() {
+    // Seleciona uma cor aleatória da lista
+    return _colorOptions[_random.nextInt(_colorOptions.length)];
   }
 
   @override
@@ -30,47 +44,38 @@ class _ItemGridState extends State<ItemGrid> {
       children: [
         LayoutBuilder(
           builder: (context, constraints) {
-            ItemService itemService = ItemService(data: widget.futureItems!);
-            itemService.validarItens();
+            // ItemService itemService = ItemService(data: widget.futureItems!);
+            // itemService.validarItens();
 
             int crossAxisCount;
             double childAspectRatio;
 
             if (constraints.maxWidth < 320) {
               crossAxisCount = 1;
-              childAspectRatio = 0.85;
+              childAspectRatio = 2;
             } else if (constraints.maxWidth < 380) {
               crossAxisCount = 2;
-              childAspectRatio = 0.6;
+              childAspectRatio = 2;
             } else if (constraints.maxWidth < 415) {
               crossAxisCount = 2;
               childAspectRatio = 0.7;
             } else if (constraints.maxWidth < 450) {
               crossAxisCount = 2;
-              childAspectRatio = 0.65;
+              childAspectRatio = 2;
             } else if (constraints.maxWidth < 500) {
               crossAxisCount = 2;
-              childAspectRatio = 0.8;
+              childAspectRatio = 2;
             } else if (constraints.maxWidth < 550) {
               crossAxisCount = 2;
-              childAspectRatio = 0.9;
+              childAspectRatio = 2;
             } else if (constraints.maxWidth < 600) {
               crossAxisCount = 3;
-              childAspectRatio = 2 / 3.5;
+              childAspectRatio = 2;
             } else {
               crossAxisCount = 3;
-              childAspectRatio = 3 / 4.2;
+              childAspectRatio = 2;
             }
-            int limit = 0;
-            if (widget.activateButtom) {
-              if (itemService.getLength() > count) {
-                limit = count;
-              } else {
-                limit = itemService.getLength();
-              }
-            } else {
-              limit = itemService.getLength();
-            }
+            int limit = widget.futureItems!.length;
 
             return Column(
               children: [
@@ -85,28 +90,19 @@ class _ItemGridState extends State<ItemGrid> {
                   ),
                   itemCount: limit,
                   itemBuilder: (context, index) {
-                    ItemEntity data = itemService.getItem(index);
+                    var data = widget.futureItems![index];
 
                     return InkWell(
                       onTap: () {
-                        context.go('/produto?d=${data.id}&p=${data.provider}');
+                        context.go('/search?product=$data');
                       },
-                      child: item(
-                        price: data.price,
-                        title: data.title,
-                        subtitle: data.subtitle,
-                        imgUrl: data.imgUrl,
+                      child: itemCategories(
+                        title: data,
+                        color: _getRandomColor(), // Cor aleatória da lista
                       ),
                     );
                   },
                 ),
-                const SizedBox(height: 10),
-                widget.activateButtom
-                    ? buttonWithIcon(constraints.maxWidth,
-                        ontap: incrementCount,
-                        icon: Icons.add,
-                        text: "ver mais")
-                    : Container()
               ],
             );
           },

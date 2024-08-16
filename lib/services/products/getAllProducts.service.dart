@@ -15,6 +15,6 @@ Future<List<Map<String, dynamic>>> fetchItems() async {
 
     return items;
   } else {
-    throw Exception('Falha ao carregar os dados');
+    return [];
   }
 }

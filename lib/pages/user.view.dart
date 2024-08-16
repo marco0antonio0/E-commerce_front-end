@@ -1,22 +1,19 @@
-import 'package:dirrocha_ecommerce/components/banner.dart';
-import 'package:dirrocha_ecommerce/components/buttonWithIcon.dart';
-import 'package:dirrocha_ecommerce/services/validateFieldUser/validateLogin.service.dart';
+import 'package:dirrocha_ecommerce/CustomMessages/popupAlert.dart';
+import 'package:dirrocha_ecommerce/components/buttonWithIconV2.dart';
 import 'package:flutter/material.dart';
-import 'package:dirrocha_ecommerce/components/fieldWidget.dart';
 import 'package:dirrocha_ecommerce/components/logo.dart';
 import 'package:dirrocha_ecommerce/components/navigateSection.dart';
-import 'package:dirrocha_ecommerce/components/sectionTitleAndOptions.dart';
 import 'package:dirrocha_ecommerce/components/sectionTitleLogo.dart';
 import 'package:go_router/go_router.dart';
 
-class PageLogin extends StatefulWidget {
-  const PageLogin({super.key});
+class PageUser extends StatefulWidget {
+  const PageUser({super.key});
 
   @override
-  State<PageLogin> createState() => _PageLoginState();
+  State<PageUser> createState() => _PageUserState();
 }
 
-class _PageLoginState extends State<PageLogin> {
+class _PageUserState extends State<PageUser> {
   TextEditingController controllerEmail = TextEditingController();
   TextEditingController controllerPassword = TextEditingController();
   late List<Map<String, dynamic>> items;
@@ -34,7 +31,6 @@ class _PageLoginState extends State<PageLogin> {
   @override
   void initState() {
     super.initState();
-    // _loadData();
   }
 
   void _onTabTapped(int index) {
@@ -97,71 +93,47 @@ class _PageLoginState extends State<PageLogin> {
                             const SizedBox(height: 10),
                             Align(
                                 alignment: Alignment.center,
-                                child: sectionTitleLogo(text: 'Login')),
+                                child: sectionTitleLogo(text: '')),
 
                             // ==============================================================
                             const SizedBox(height: 10),
+                            const Center(
+                                child: CircleAvatar(
+                                    radius: 70,
+                                    backgroundColor: Colors.green,
+                                    child: Icon(Icons.person,
+                                        color: Colors.white, size: 50))),
+
                             // ==============================================================
-                            banner(wscreen),
+                            const SizedBox(height: 15),
+                            // ==============================================================
+                            const Center(
+                                child: Text(
+                              "Ola seja bem vindo usuario",
+                              style: TextStyle(fontSize: 20),
+                            )),
                             // ==============================================================
                             const SizedBox(height: 40),
+
                             // ==============================================================
-                            sectionTitleAndSection(wscreen,
-                                fontSize: wscreen > 700 ? 24 : 18,
-                                text: "Email"),
-                            // ==============================================================
-                            const SizedBox(height: 10),
-                            // ==============================================================
-                            Align(
-                                alignment: Alignment.center,
-                                child: fieldWidget(wscreen,
-                                    context: context,
-                                    hasError: erroEmail,
-                                    controller: controllerEmail,
-                                    icon: Icons.person,
-                                    errorMessage: messageErroEmail,
-                                    hintText: 'Digite seu email')),
-                            // ==============================================================
-                            const SizedBox(height: 10),
-                            // ==============================================================
-                            sectionTitleAndSection(
-                              fontSize: wscreen > 700 ? 24 : 18,
-                              wscreen,
-                              text: "Password",
-                            ),
-                            // ==============================================================
-                            const SizedBox(height: 10),
-                            // ==============================================================
-                            Align(
-                                alignment: Alignment.center,
-                                child: fieldWidget(wscreen,
-                                    context: context,
-                                    hasError: erroPassword,
-                                    isPassword: true,
-                                    controller: controllerPassword,
-                                    errorMessage: messageErroPassword,
-                                    icon: Icons.password,
-                                    hintText: 'Digite sua senha')),
-                            // ==============================================================
-                            const SizedBox(height: 30),
-                            // ==============================================================
-                            buttonWithIcon(wscreen,
-                                icon: Icons.arrow_forward,
-                                text: 'Login', ontap: () async {
-                              await valideFieldUserLogin(
-                                  context: context,
-                                  email: controllerEmail.text,
-                                  password: controllerPassword.text);
+                            buttonWithIconV2(wscreen,
+                                icon: Icons.shopping_bag,
+                                text: 'Ver minha compras', ontap: () async {
+                              context.go('/user/minhas-compras');
                             }),
                             // ==============================================================
-                            const SizedBox(height: 8),
+                            const SizedBox(height: 10),
                             // ==============================================================
-                            buttonWithIcon(wscreen,
-                                color: Colors.blue,
-                                icon: Icons.account_circle,
-                                text: 'Criar nova conta', ontap: () {
-                              context.go('/register');
-                            })
+                            buttonWithIconV2(wscreen,
+                                icon: Icons.logout,
+                                text: 'sair', ontap: () async {
+                              showLoginAlertIslogoff(
+                                  context, wscreen > 500 ? 500 : wscreen - 50);
+                            }),
+                            // ==============================================================
+                            buttonWithIconV2Null(wscreen),
+                            // ==============================================================
+                            const SizedBox(height: 10),
                           ],
                         ),
                       ),

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
-Widget buttonWithIcon(double wscreen,
-    {required Function ontap,
-    IconData icon = Icons.arrow_outward,
-    text = "Ir para o inicio",
-    Color color = const Color(0xff53B175)}) {
+Widget buttonWithIcon(
+  double wscreen, {
+  required Function ontap,
+  IconData icon = Icons.arrow_outward,
+  text = "Ir para o inicio",
+  Color color = const Color(0xff53B175),
+}) {
   return Center(
     child: InkWell(
       onTap: () async => await ontap(),

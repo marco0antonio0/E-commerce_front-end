@@ -1,8 +1,8 @@
+import 'package:dirrocha_ecommerce/components/listCategoriesBuild.dart';
+import 'package:dirrocha_ecommerce/services/products/getCategories.dart';
 import 'package:flutter/material.dart';
 
 import 'package:dirrocha_ecommerce/components/fieldWidget.dart';
-import 'package:dirrocha_ecommerce/components/Carousel.dart';
-import 'package:dirrocha_ecommerce/components/itemBuild.dart';
 import 'package:dirrocha_ecommerce/components/logo.dart';
 import 'package:dirrocha_ecommerce/components/navigateSection.dart';
 import 'package:dirrocha_ecommerce/components/sectionTitleAndOptions.dart';
@@ -10,17 +10,17 @@ import 'package:dirrocha_ecommerce/components/sectionTitleLogo.dart';
 import 'package:dirrocha_ecommerce/services/products/getAllProducts.service.dart';
 import 'package:go_router/go_router.dart';
 
-class PageHome extends StatefulWidget {
-  const PageHome({super.key});
+class PageExplore extends StatefulWidget {
+  const PageExplore({super.key});
 
   @override
-  State<PageHome> createState() => _PageHomeState();
+  State<PageExplore> createState() => _PageExploreState();
 }
 
-class _PageHomeState extends State<PageHome> {
+class _PageExploreState extends State<PageExplore> {
   TextEditingController controllerSearch = TextEditingController();
-  late List _items;
-  int _currentIndex = 0;
+  List<String> items = [];
+  int _currentIndex = 1;
   final ScrollController _scrollController = ScrollController();
   bool _isLoading = true;
   double _opacity = 0.0; // Inicializando a opacidade em 0
@@ -34,8 +34,10 @@ class _PageHomeState extends State<PageHome> {
   Future<void> _loadData() async {
     var data = await fetchItems();
     if (data.isNotEmpty) {
+      var temp = getCateroies(data);
       setState(() {
-        _items = data; // Armazena os itens carregados
+        items = temp;
+        // Armazena os itens carregados
         _isLoading = false; // Dados carregados
         _opacity = 1.0; // Ajustando a opacidade para 1 após carregar
       });
@@ -124,22 +126,15 @@ class _PageHomeState extends State<PageHome> {
                             // ==============================================================
                             const SizedBox(height: 10),
                             // ==============================================================
-                            const Carousel(
-                              images: [
-                                'images/bannerImage.png',
-                                'images/banner1.png',
-                                'images/banner2.png',
-                                'images/logoSemFundo.png',
-                              ],
-                            ),
-                            // ==============================================================
+
                             const SizedBox(height: 20),
                             // ==============================================================
-                            sectionTitleAndSection(wscreen),
+                            sectionTitleAndSection(wscreen,
+                                text: "Categotegories"),
                             // ==============================================================
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 10),
                             // ==============================================================
-                            ItemGrid(futureItems: _items),
+                            ItemGridCategories(futureItems: items),
                             // ==============================================================
                             const SizedBox(height: 30),
                           ],

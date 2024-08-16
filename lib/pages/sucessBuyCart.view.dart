@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:dirrocha_ecommerce/components/navigateSection.dart';
 import 'package:go_router/go_router.dart';
 
-class PageNotFound extends StatefulWidget {
-  const PageNotFound({super.key});
+class PageSucessBuyCart extends StatefulWidget {
+  const PageSucessBuyCart({super.key});
 
   @override
-  State<PageNotFound> createState() => _PageNotFoundState();
+  State<PageSucessBuyCart> createState() => _PageSucessBuyCartState();
 }
 
-class _PageNotFoundState extends State<PageNotFound> {
+class _PageSucessBuyCartState extends State<PageSucessBuyCart> {
   bool load = false;
   int _currentIndex = 0;
   final ScrollController _scrollController = ScrollController();
@@ -70,11 +70,13 @@ class _PageNotFoundState extends State<PageNotFound> {
                         width: wscreen,
                         height: wscreen > 700 ? 200 : 350,
                         child: loadNetworkImageWithFallback('',
-                            fallbackAsset: 'images/imageNotFound.png',
+                            fallbackAsset: 'images/sucess.png',
                             fit: BoxFit.scaleDown),
                       ),
-                      const SizedBox(height: 50),
-                      Center(child: textProduct(text: 'Pagina não encontrada')),
+                      const SizedBox(height: 0),
+                      Center(
+                          child: textProduct(
+                              text: 'Compra realizada com sucesso')),
                       const SizedBox(height: 30),
                       buttonWithIcon(wscreen, text: 'Ir para o inicio',
                           ontap: () {

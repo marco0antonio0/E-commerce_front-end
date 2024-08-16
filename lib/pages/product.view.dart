@@ -1,9 +1,14 @@
+import 'package:dirrocha_ecommerce/CustomMessages/popupAlert.dart';
 import 'package:dirrocha_ecommerce/components/buttonWithIcon.dart';
 import 'package:dirrocha_ecommerce/components/imageLoader.dart';
 import 'package:dirrocha_ecommerce/components/sectionPriceProduct.dart';
 import 'package:dirrocha_ecommerce/components/textProduct.dart';
 import 'package:dirrocha_ecommerce/entitites/item.entity.dart';
-import 'package:dirrocha_ecommerce/services/getItem/getProductsByProviderAndId.service.dart';
+import 'package:dirrocha_ecommerce/services/cokiees/deleteCokiees.dart';
+import 'package:dirrocha_ecommerce/services/cokiees/getCokiees.dart';
+import 'package:dirrocha_ecommerce/services/cart/addItemCart.dart';
+import 'package:dirrocha_ecommerce/services/products/getProductsByProviderAndId.service.dart';
+import 'package:dirrocha_ecommerce/services/validToken/fetch.dart';
 import 'package:dirrocha_ecommerce/services/validarItem/validar.service.dart';
 import 'package:flutter/material.dart';
 import 'package:dirrocha_ecommerce/components/navigateSection.dart';
@@ -32,16 +37,29 @@ class _PageProductState extends State<PageProduct> {
     _loadData();
   }
 
+// final successAlert = buildButton(
+//     onTap: () {
+
+//     },
+//     title: 'Success',
+//     text: 'Transaction Completed Successfully!',
+//     leadingImage: 'assets/success.gif',
+//   );
+
   Future<void> _loadData() async {
     var data = await fetchItemsByProviderAndId(
         provider: widget.provider, id: widget.id);
-    ItemService itemService = ItemService(data: [data]);
-    itemService.validarItens();
-    ItemEntity temp = itemService.getItem(0);
-    setState(() {
-      load = temp.title.isNotEmpty;
-      item = temp;
-    });
+    if (data == null) {
+      context.go('/404');
+    } else {
+      ItemService itemService = ItemService(data: [data]);
+      itemService.validarItens();
+      ItemEntity temp = itemService.getItem(0);
+      setState(() {
+        load = temp.title.isNotEmpty;
+        item = temp;
+      });
+    }
   }
 
   void _onTabTapped(int index) {
@@ -49,11 +67,11 @@ class _PageProductState extends State<PageProduct> {
       case 0:
         context.go('/');
       case 1:
-        context.go('/');
+        context.go('/explore');
       case 2:
         context.go('/login');
       case 3:
-        context.go('/');
+        context.go('/cart');
       default:
     }
     setState(() {
@@ -142,8 +160,34 @@ class _PageProductState extends State<PageProduct> {
                                   horizontal: wscreen < 700 ? 15 : 0),
                               child: buttonWithIcon(wscreen,
                                   icon: Icons.shopping_cart,
-                                  text: "Adiciona",
-                                  ontap: () {})),
+                                  text: "Adiciona", ontap: () async {
+                                var res = await getJwtToken();
+                                // ==============================================
+                                //         chave jwt não encontrada
+                                if (res == null) {
+                                  showLoginAlertIslogin(
+                                      context, wscreen > 500 ? 500 : wscreen);
+                                } else {
+                                  // ==============================================
+                                  //           chave jwt encontrada
+                                  //      validando o token jwt se é valido
+                                  //          CHAVE EM VALIDAÇÃO
+                                  bool check = await fetchIsValidToken(res);
+                                  if (!check) {
+                                    await deleteJwtToken();
+                                    showLoginAlertExpiredSession(context);
+                                  } else {
+                                    await fetchAddCartItem(
+                                      context,
+                                      price: item.price,
+                                      productName: item.title,
+                                      popup: true,
+                                      productId: item.id,
+                                      provider: item.provider,
+                                    );
+                                  }
+                                }
+                              })),
                           // ==============================================================
                           const SizedBox(height: 100),
                           // ==============================================================

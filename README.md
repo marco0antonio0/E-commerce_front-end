@@ -1,5 +1,6 @@
 # dirrocha_ecommerce
 
+![img](imageReadme/banner.png)
 A new Flutter project.
 
 ## Getting Started

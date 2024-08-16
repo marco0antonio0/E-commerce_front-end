@@ -1,26 +1,26 @@
+import 'package:dirrocha_ecommerce/services/products/getProductByName.dart';
 import 'package:flutter/material.dart';
 
 import 'package:dirrocha_ecommerce/components/fieldWidget.dart';
-import 'package:dirrocha_ecommerce/components/Carousel.dart';
 import 'package:dirrocha_ecommerce/components/itemBuild.dart';
 import 'package:dirrocha_ecommerce/components/logo.dart';
 import 'package:dirrocha_ecommerce/components/navigateSection.dart';
 import 'package:dirrocha_ecommerce/components/sectionTitleAndOptions.dart';
 import 'package:dirrocha_ecommerce/components/sectionTitleLogo.dart';
-import 'package:dirrocha_ecommerce/services/products/getAllProducts.service.dart';
 import 'package:go_router/go_router.dart';
 
-class PageHome extends StatefulWidget {
-  const PageHome({super.key});
+class PageSearch extends StatefulWidget {
+  final String product;
+  const PageSearch({super.key, required this.product});
 
   @override
-  State<PageHome> createState() => _PageHomeState();
+  State<PageSearch> createState() => _PageSearchState();
 }
 
-class _PageHomeState extends State<PageHome> {
+class _PageSearchState extends State<PageSearch> {
   TextEditingController controllerSearch = TextEditingController();
-  late List _items;
-  int _currentIndex = 0;
+  late var items;
+  int _currentIndex = 1;
   final ScrollController _scrollController = ScrollController();
   bool _isLoading = true;
   double _opacity = 0.0; // Inicializando a opacidade em 0
@@ -28,18 +28,19 @@ class _PageHomeState extends State<PageHome> {
   @override
   void initState() {
     super.initState();
+    setState(() {
+      controllerSearch.text = widget.product;
+    });
     _loadData();
   }
 
   Future<void> _loadData() async {
-    var data = await fetchItems();
-    if (data.isNotEmpty) {
-      setState(() {
-        _items = data; // Armazena os itens carregados
-        _isLoading = false; // Dados carregados
-        _opacity = 1.0; // Ajustando a opacidade para 1 após carregar
-      });
-    }
+    var data = await fetchGetProductsByName(name: widget.product);
+    setState(() {
+      items = data; // Armazena os itens carregados
+      _isLoading = false; // Dados carregados
+      _opacity = 1.0; // Ajustando a opacidade para 1 após carregar
+    });
   }
 
   void _onTabTapped(int index) {
@@ -119,27 +120,31 @@ class _PageHomeState extends State<PageHome> {
                                         '/search?product=${controllerSearch.text}');
                                   }
 
+                                  var data = await fetchGetProductsByName(
+                                      name: controllerSearch.text);
+                                  setState(() {
+                                    items = data;
+                                  });
+
                                   _loadData();
                                 })),
                             // ==============================================================
-                            const SizedBox(height: 10),
-                            // ==============================================================
-                            const Carousel(
-                              images: [
-                                'images/bannerImage.png',
-                                'images/banner1.png',
-                                'images/banner2.png',
-                                'images/logoSemFundo.png',
-                              ],
-                            ),
+
                             // ==============================================================
                             const SizedBox(height: 20),
                             // ==============================================================
-                            sectionTitleAndSection(wscreen),
+                            sectionTitleAndSection(wscreen,
+                                text: "Resultado da pesquisa"),
                             // ==============================================================
                             const SizedBox(height: 20),
                             // ==============================================================
-                            ItemGrid(futureItems: _items),
+                            items.isEmpty
+                                ? const Text(
+                                    "Nada encontrado",
+                                    style: TextStyle(fontSize: 20),
+                                  )
+                                : ItemGrid(
+                                    futureItems: items, activateButtom: false),
                             // ==============================================================
                             const SizedBox(height: 30),
                           ],

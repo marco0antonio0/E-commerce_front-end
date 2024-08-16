@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
 
-Widget fieldWidget(
-  double wscreen, {
-  bool isPassword = false,
-  String hintText = "Search Store",
-  IconData icon = Icons.search,
-  required TextEditingController controller,
-  bool hasError = false,
-  String errorMessage = "",
-}) {
-  return Container(
+Widget fieldWidget(double wscreen,
+    {required BuildContext context,
+    bool isPassword = false,
+    String hintText = "Search Store",
+    IconData icon = Icons.search,
+    required TextEditingController controller,
+    bool hasError = false,
+    String errorMessage = "",
+    bool isReactive = false,
+    Function? action}) {
+  return SizedBox(
     width: wscreen,
     child: TextField(
       obscureText: isPassword,
       controller: controller,
+      onSubmitted: (value) async {
+        // Quando o usuário pressiona Enter, navegar para a página desejada
+        if (isReactive) {
+          await action!();
+        }
+      },
       decoration: InputDecoration(
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
@@ -26,6 +33,7 @@ Widget fieldWidget(
           ),
         ),
         hintText: hintText,
+
         fillColor: const Color(0xff7C7C7C),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(

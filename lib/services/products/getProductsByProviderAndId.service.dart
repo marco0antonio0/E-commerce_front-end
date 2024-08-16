@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-Future<Map<String, dynamic>> fetchItemsByProviderAndId({
+Future fetchItemsByProviderAndId({
   required String provider,
   required String id,
 }) async {
@@ -14,6 +14,8 @@ Future<Map<String, dynamic>> fetchItemsByProviderAndId({
     Map<String, dynamic> jsonResponse = json.decode(response.body);
     return jsonResponse;
   } else {
-    throw Exception('Falha ao carregar os dados');
+    // context.go('/404');
+    // throw Exception('Falha ao carregar os dados');
+    return null;
   }
 }

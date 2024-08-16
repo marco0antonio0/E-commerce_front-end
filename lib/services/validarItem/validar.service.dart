@@ -4,8 +4,8 @@ import 'package:dirrocha_ecommerce/entitites/item.entity.dart';
 import 'package:dirrocha_ecommerce/services/validarItem/abstract-validar.dart';
 
 class ItemService implements ValidationItem {
-  final List<Map<String, dynamic>> data;
-  List<ItemEntity> products = [];
+  final List data;
+  List products = [];
 
   ItemService({required this.data});
 
