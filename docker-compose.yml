@@ -1,14 +1,8 @@
-version: '3.8'
-
 services:
-  web:
-    image: nginx:latest
+  flutter-web:
+    build: .
+    container_name: flutter_web
     ports:
-      - "3005:80"
+      - "3006:3005"
     volumes:
-      - ./build/web:/usr/share/nginx/html:ro
-    networks:
-      - webnet
-
-networks:
-  webnet:
+      - .:/app
