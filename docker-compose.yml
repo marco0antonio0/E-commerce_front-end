@@ -3,6 +3,6 @@ services:
     build: .
     container_name: flutter_web
     ports:
-      - "3006:3005"
+      - "3005:3005"
     volumes:
       - .:/app
