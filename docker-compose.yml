@@ -8,5 +8,6 @@ services:
       - "3005:80"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
       - ./build/web:/usr/share/nginx/html:ro
     restart: always
