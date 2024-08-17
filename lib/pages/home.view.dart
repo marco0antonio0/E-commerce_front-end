@@ -128,7 +128,8 @@ class _PageHomeState extends State<PageHome> {
                             ],
                           ),
                           const SizedBox(height: 20),
-                          sectionTitleAndSection(wscreen),
+                          sectionTitleAndSection(wscreen,
+                              text: "Ofertas imperdiveis"),
                           const SizedBox(height: 20),
                           ItemGrid(
                               futureItems:

@@ -129,8 +129,7 @@ class _PageExploreState extends State<PageExplore> {
 
                             const SizedBox(height: 20),
                             // ==============================================================
-                            sectionTitleAndSection(wscreen,
-                                text: "Categotegories"),
+                            sectionTitleAndSection(wscreen, text: "Categorias"),
                             // ==============================================================
                             const SizedBox(height: 10),
                             // ==============================================================
