@@ -1,48 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
-  <meta name="flutter-web-routing" content="true">
-  <base href="/">
-
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-  <!-- Cor da Status Bar (barra de status) no Chrome para Android -->
+  <!-- SEO -->
+  <title>Dirrocha Ecommerce - Suas compras online</title>
+  <meta name="description"
+    content="Dirrocha Ecommerce - Encontre os melhores produtos com os melhores preços. Oferecemos uma experiência de compra online rápida, segura e conveniente.">
+  <meta name="keywords" content="ecommerce, compras online, produtos, descontos, ofertas, dirrocha">
+  <meta name="author" content="Dirrocha Ecommerce">
+  <link rel="canonical" href="https://www.dirrocha-ecommerce.com/">
+
+  <!-- Open Graph para redes sociais -->
+  <meta property="og:title" content="Dirrocha Ecommerce - Suas compras online">
+  <meta property="og:description" content="Encontre os melhores produtos com os melhores preços.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.dirrocha-ecommerce.com/">
+  <meta property="og:image" content="https://www.dirrocha-ecommerce.com/images/og-image.jpg">
+  <meta property="og:site_name" content="Dirrocha Ecommerce">
+  <meta property="og:locale" content="pt_BR">
+
+  <!-- Twitter Card para compartilhamento no Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Dirrocha Ecommerce - Suas compras online">
+  <meta name="twitter:description" content="Encontre os melhores produtos com os melhores preços.">
+  <meta name="twitter:image" content="https://www.dirrocha-ecommerce.com/images/twitter-card.jpg">
+  <meta name="twitter:site" content="@dirrocha">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png">
+
+  <!-- Manifesto para PWA -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Cor da Status Bar e Navigation Bar no Chrome para Android -->
   <meta name="theme-color" content="#EFEAD4">
-
-  <!-- Cor da Navigation Bar (barra de navegação) no Chrome para Android -->
   <meta name="msapplication-navbutton-color" content="#EFEAD4">
   <meta name="msapplication-TileColor" content="#EFEAD4">
 
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="dirrocha_ecommerce">
+  <meta name="apple-mobile-web-app-title" content="Dirrocha Ecommerce">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png">
-
-  <title>Dirrocha Ecommerce</title>
-  <link rel="manifest" href="manifest.json">
+  <!-- Estilos e Scripts -->
   <style id="splash-screen-style">
     html {
-      height: 100%
+      height: 100%;
     }
 
     body {
@@ -60,46 +68,6 @@
       -ms-transform: translate(-50%, -50%);
       transform: translate(-50%, -50%);
     }
-
-    .contain {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    .stretch {
-      display: block;
-      width: 100%;
-      height: 100%;
-    }
-
-    .cover {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .bottom {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      -ms-transform: translate(-50%, 0);
-      transform: translate(-50%, 0);
-    }
-
-    .bottomLeft {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-    }
-
-    .bottomRight {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-    }
   </style>
   <script id="splash-screen-script">
     function removeSplashFromWeb() {
@@ -108,7 +76,8 @@
       document.body.style.background = "transparent";
     }
   </script>
-  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+  <meta name="flutter-web-routing" content="true">
+  <base href="/">
 </head>
 
 <body>
@@ -119,11 +88,9 @@
     <source
       srcset="splash/img/dark-1x.png 1x, splash/img/dark-2x.png 2x, splash/img/dark-3x.png 3x, splash/img/dark-4x.png 4x"
       media="(prefers-color-scheme: dark)">
-    <img class="center" aria-hidden="true" src="splash/img/light-1x.png" alt="">
+    <img class="center" aria-hidden="true" src="splash/img/light-1x.png" alt="Dirrocha Ecommerce">
   </picture>
-  <script src="flutter_bootstrap.js" async=""></script>
-
-
+  <script src="flutter_bootstrap.js" async></script>
 </body>
 
 </html>
