@@ -1,7 +1,7 @@
 
 # Front-End E-commerce
 
-![Imagem do Projeto](imagesReadme/walpapersss.png)
+![Imagem do Projeto](imageReadme/wal.png)
 
 Este projeto de E-commerce foi desenvolvido como parte de um desafio técnico . O objetivo foi construir uma aplicação completa, cobrindo tanto o front-end quanto o back-end, para atender aos requisitos de uma loja online fictícia.
 
