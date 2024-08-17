@@ -101,12 +101,12 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  fonts:
-    - family: Typeface
-      fonts:
-        - asset: fonts/Gilroy-Light.otf
-        - asset: fonts/Gilroy-ExtraBold.otf
-          weight: 700
+  # fonts:
+  #   - family: Typeface
+  #     fonts:
+  #       - asset: fonts/Gilroy-Light.otf
+  #       - asset: fonts/Gilroy-ExtraBold.otf
+  #         weight: 700
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
