@@ -73,7 +73,7 @@ class RoundedBottomNavigationBar extends StatelessWidget {
                     ? const Color(0xff53B175)
                     : Colors.black.withOpacity(0.5),
               ),
-              label: "Explore",
+              label: "Explorar",
             ),
             // ====================================================
             BottomNavigationBarItem(
@@ -84,7 +84,7 @@ class RoundedBottomNavigationBar extends StatelessWidget {
                     ? const Color(0xff53B175)
                     : Colors.black.withOpacity(0.5),
               ),
-              label: "Account",
+              label: "Conta",
             ),
             // ====================================================
             BottomNavigationBarItem(
@@ -95,7 +95,7 @@ class RoundedBottomNavigationBar extends StatelessWidget {
                     ? const Color(0xff53B175)
                     : Colors.black.withOpacity(0.5),
               ),
-              label: "Cart",
+              label: "Carrinho",
             ),
           ],
         ),

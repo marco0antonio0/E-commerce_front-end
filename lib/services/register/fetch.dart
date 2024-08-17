@@ -6,11 +6,14 @@ import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 
 Future<bool> registerUser(
-    String email, String nome, String password, BuildContext context) async {
+    {required String email,
+    required String nome,
+    required String password,
+    required BuildContext context}) async {
   // Configurando o corpo da requisição como application/x-www-form-urlencoded
   final body = {
     'email': email,
-    'name': password,
+    'name': nome,
     'password': password,
   };
 
@@ -25,6 +28,8 @@ Future<bool> registerUser(
   if (response.statusCode == 201) {
     // Decodificar a resposta JSON
     Map<String, dynamic> jsonResponse = json.decode(response.body);
+    print(body);
+    print(response.body);
 
     // Verificar se o token JWT está presente na resposta
     if (jsonResponse.containsKey('token')) {

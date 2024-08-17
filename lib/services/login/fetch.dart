@@ -5,7 +5,9 @@ import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 
 Future<bool> loginUser(
-    String email, String password, BuildContext context) async {
+    {required String email,
+    required String password,
+    required BuildContext context}) async {
   // Configurando o corpo da requisição como application/x-www-form-urlencoded
   final body = {
     'email': email,

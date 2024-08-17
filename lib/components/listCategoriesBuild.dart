@@ -58,7 +58,7 @@ class _ItemGridCategoriesState extends State<ItemGridCategories> {
               childAspectRatio = 2;
             } else if (constraints.maxWidth < 415) {
               crossAxisCount = 2;
-              childAspectRatio = 0.7;
+              childAspectRatio = 2;
             } else if (constraints.maxWidth < 450) {
               crossAxisCount = 2;
               childAspectRatio = 2;

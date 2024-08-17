@@ -8,7 +8,7 @@ Future valideFieldUserRegister(
     required String password,
     required BuildContext context}) async {
   if (email.isNotEmpty && nome.isNotEmpty && password.isNotEmpty) {
-    bool response = await registerUser(email, password, nome, context);
+    bool response = await registerUser(email: email,password:  password,nome:  nome,context:  context);
 
     return [response, email.isNotEmpty, nome.isNotEmpty, password.isNotEmpty];
   } else {
