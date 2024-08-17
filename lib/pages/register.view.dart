@@ -117,6 +117,7 @@ class _PageRegisterState extends State<PageRegister> {
                             const SizedBox(height: 10),
 
                             // ==============================================================
+                            //          campo controllerEmail
                             Align(
                                 alignment: Alignment.center,
                                 child: fieldWidget(wscreen,
@@ -135,6 +136,7 @@ class _PageRegisterState extends State<PageRegister> {
                             // ==============================================================
                             const SizedBox(height: 10),
                             // ==============================================================
+                            //          campo controllerNome
                             Align(
                                 alignment: Alignment.center,
                                 child: fieldWidget(wscreen,
@@ -155,6 +157,7 @@ class _PageRegisterState extends State<PageRegister> {
                             // ==============================================================
                             const SizedBox(height: 10),
                             // ==============================================================
+                            //          campo controllerPassword
                             Align(
                                 alignment: Alignment.center,
                                 child: fieldWidget(wscreen,

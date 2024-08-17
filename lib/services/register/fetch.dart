@@ -25,11 +25,10 @@ Future<bool> registerUser(
     body: body,
   );
 
+  print(response.body);
   if (response.statusCode == 201) {
     // Decodificar a resposta JSON
     Map<String, dynamic> jsonResponse = json.decode(response.body);
-    print(body);
-    print(response.body);
 
     // Verificar se o token JWT está presente na resposta
     if (jsonResponse.containsKey('token')) {
