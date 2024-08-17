@@ -8,6 +8,24 @@ Widget item({
   subtitle = "7pcs Priceg",
   imgUrl = "",
 }) {
+  // Defina estilos de texto constantes fora do build para otimizar o desempenho
+  const titleStyle = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w600,
+    color: Colors.black,
+  );
+
+  const subtitleStyle = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.normal,
+    color: Colors.black54,
+  );
+
+  const priceStyle = TextStyle(
+    fontSize: 20,
+    color: Colors.black,
+  );
+
   return LayoutBuilder(
     builder: (context, constraints) {
       return Container(
@@ -31,28 +49,27 @@ Widget item({
               height:
                   constraints.maxHeight * 0.5, // 50% da altura para a imagem
               width: double.infinity,
-              child: loadNetworkImageWithFallback(imgUrl,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(
+                    15), // Para imagens com bordas arredondadas
+                child: loadNetworkImageWithFallback(
+                  imgUrl,
                   fit: BoxFit
-                      .scaleDown), // Usando a função para carregar a imagem
+                      .cover, // Usando BoxFit.cover para melhor dimensionamento
+                ),
+              ),
             ),
             const SizedBox(height: 5),
             AutoSizeText(
               title,
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black.withOpacity(.8)),
+              style: titleStyle,
               maxLines: 1,
               minFontSize: 12,
               overflow: TextOverflow.ellipsis,
             ),
             AutoSizeText(
               subtitle,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.normal,
-                color: Colors.black.withOpacity(0.5),
-              ),
+              style: subtitleStyle,
               maxLines: 1,
               minFontSize: 10,
               overflow: TextOverflow.ellipsis,
@@ -63,8 +80,7 @@ Widget item({
               children: [
                 AutoSizeText(
                   "\$$price",
-                  style: TextStyle(
-                      fontSize: 20, color: Colors.black.withOpacity(.8)),
+                  style: priceStyle,
                   maxLines: 1,
                   minFontSize: 12,
                   overflow: TextOverflow.ellipsis,

@@ -19,27 +19,18 @@ class PageHome extends StatefulWidget {
 
 class _PageHomeState extends State<PageHome> {
   TextEditingController controllerSearch = TextEditingController();
-  late List _items;
+  late Future<List> _itemsFuture;
   int _currentIndex = 0;
   final ScrollController _scrollController = ScrollController();
-  bool _isLoading = true;
-  double _opacity = 0.0; // Inicializando a opacidade em 0
 
   @override
   void initState() {
     super.initState();
-    _loadData();
+    _itemsFuture = _loadData();
   }
 
-  Future<void> _loadData() async {
-    var data = await fetchItems();
-    if (data.isNotEmpty) {
-      setState(() {
-        _items = data; // Armazena os itens carregados
-        _isLoading = false; // Dados carregados
-        _opacity = 1.0; // Ajustando a opacidade para 1 após carregar
-      });
-    }
+  Future<List> _loadData() async {
+    return await fetchItems();
   }
 
   void _onTabTapped(int index) {
@@ -47,13 +38,18 @@ class _PageHomeState extends State<PageHome> {
       switch (index) {
         case 0:
           context.go('/');
+          break;
         case 1:
           context.go('/explore');
+          break;
         case 2:
           context.go('/login');
+          break;
         case 3:
           context.go('/cart');
+          break;
         default:
+          break;
       }
       _currentIndex = index;
     });
@@ -71,85 +67,83 @@ class _PageHomeState extends State<PageHome> {
         onTap: _onTabTapped,
       ),
       backgroundColor: Colors.white,
-      body: _isLoading
-          ? const Center(
-              child: CircularProgressIndicator(), // Animação de carregamento
-            )
-          : AnimatedOpacity(
-              opacity: _opacity, // Controlando a opacidade
-              duration: const Duration(seconds: 0), // Duração da transição
-              child: Scrollbar(
+      body: FutureBuilder<List>(
+        future: _itemsFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(), // Indicador de carregamento
+            );
+          } else if (snapshot.hasError) {
+            return const Center(child: Text('Erro ao carregar dados.'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(child: Text('Nenhum item encontrado.'));
+          } else {
+            return Scrollbar(
+              controller: _scrollController,
+              thumbVisibility: true,
+              child: SingleChildScrollView(
                 controller: _scrollController,
-                thumbVisibility: true,
-                child: SingleChildScrollView(
-                  controller: _scrollController,
-                  scrollDirection: Axis.vertical,
-                  child: Center(
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: wscreen < 700 ? 15 : 0),
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 700),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // ==============================================================
-                            const SizedBox(height: 30),
-                            // ==============================================================
-                            Align(alignment: Alignment.center, child: logo()),
-                            // ==============================================================
-                            const SizedBox(height: 10),
-                            Align(
-                                alignment: Alignment.center,
-                                child: sectionTitleLogo()),
-                            // ==============================================================
-                            const SizedBox(height: 10),
-                            // ==============================================================
-                            Align(
-                                alignment: Alignment.center,
-                                child: fieldWidget(wscreen,
-                                    context: context,
-                                    controller: controllerSearch,
-                                    isReactive: true, action: () async {
-                                  // context.goNamed('')
-                                  if (controllerSearch.text.isEmpty) {
-                                    context.go("/");
-                                  } else {
-                                    context.go(
-                                        '/search?product=${controllerSearch.text}');
-                                  }
-
-                                  _loadData();
-                                })),
-                            // ==============================================================
-                            const SizedBox(height: 10),
-                            // ==============================================================
-                            const Carousel(
-                              images: [
-                                'images/bannerImage.png',
-                                'images/banner1.png',
-                                'images/banner2.png',
-                                'images/logoSemFundo.png',
-                              ],
-                            ),
-                            // ==============================================================
-                            const SizedBox(height: 20),
-                            // ==============================================================
-                            sectionTitleAndSection(wscreen),
-                            // ==============================================================
-                            const SizedBox(height: 20),
-                            // ==============================================================
-                            ItemGrid(futureItems: _items),
-                            // ==============================================================
-                            const SizedBox(height: 30),
-                          ],
-                        ),
+                scrollDirection: Axis.vertical,
+                child: Center(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: wscreen < 700 ? 15 : 0),
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 700),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 30),
+                          Align(alignment: Alignment.center, child: logo()),
+                          const SizedBox(height: 10),
+                          Align(
+                              alignment: Alignment.center,
+                              child: sectionTitleLogo()),
+                          const SizedBox(height: 10),
+                          Align(
+                              alignment: Alignment.center,
+                              child: fieldWidget(wscreen,
+                                  context: context,
+                                  controller: controllerSearch,
+                                  isReactive: true, action: () async {
+                                if (controllerSearch.text.isEmpty) {
+                                  context.go("/");
+                                } else {
+                                  context.go(
+                                      '/search?product=${controllerSearch.text}');
+                                }
+                                setState(() {
+                                  _itemsFuture =
+                                      _loadData(); // Recarregar dados com base na pesquisa
+                                });
+                              })),
+                          const SizedBox(height: 10),
+                          const Carousel(
+                            images: [
+                              'images/bannerImage.png',
+                              'images/banner1.png',
+                              'images/banner2.png',
+                              'images/logoSemFundo.png',
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                          sectionTitleAndSection(wscreen),
+                          const SizedBox(height: 20),
+                          ItemGrid(
+                              futureItems:
+                                  snapshot.data!), // Passar itens carregados
+                          const SizedBox(height: 30),
+                        ],
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
+            );
+          }
+        },
+      ),
     );
   }
 }

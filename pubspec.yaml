@@ -37,10 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.6
   auto_size_text: ^3.0.0
   http: 
-  provider: ^6.1.2
   curved_navigation_bar: ^1.0.6
   carousel_slider: ^5.0.0
-  routefly:
   go_router: ^14.2.3
   cached_network_image: ^3.4.0
   url_strategy: ^0.3.0
@@ -49,6 +47,7 @@ dependencies:
   universal_html: ^2.2.4
   awesome_snackbar_content: ^0.1.3
   quickalert: ^1.1.0
+  flutter_native_splash: ^2.2.4 # Adicione esta linha
 
 
 dev_dependencies:
@@ -64,6 +63,14 @@ dev_dependencies:
   build_runner: ^2.4.11
   build_web_compilers: ^4.0.10
 
+
+flutter_native_splash:
+  color: "#FFFFFF"  # Cor de fundo da splash screen
+  image: images/logo.png  # Caminho da imagem da splash screen
+  web: true  # Habilitar splash screen para a web
+
+
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -78,7 +85,9 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/
+    - images/logo.png
     - images/icons/
+    - web/splash/img/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
