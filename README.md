@@ -4,6 +4,7 @@
 ![Imagem do Projeto](imageReadme/wal.png)
 
 - acessa em [e-commerce.dirrocha.com](https://e-commerce.dirrocha.com)
+- [ver telas screens projetadas](#paginas---web)
 
 Este projeto de E-commerce foi desenvolvido como parte de um desafio técnico . O objetivo foi construir uma aplicação completa, cobrindo tanto o front-end quanto o back-end, para atender aos requisitos de uma loja online fictícia.
 
@@ -130,8 +131,6 @@ Necessario ter o docker compose e o flutter instalado
    - A aplicação estará disponível em `http://localhost:3005` após o Docker Compose iniciar todos os serviços.
 
 ## Paginas - web
-
-#
 
 #### Pagina Shop
 
