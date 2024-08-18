@@ -19,6 +19,7 @@ class ItemBuildCart extends StatefulWidget {
 }
 
 class _ItemBuildCartState extends State<ItemBuildCart> {
+  bool isLoadingAlert = false;
   double result = 0.0;
   var resItem = [];
   @override
@@ -36,9 +37,12 @@ class _ItemBuildCartState extends State<ItemBuildCart> {
 
   Future incrementItem(index) async {
     // avisa a interface da quantidade de items
-    setState(() {
-      resItem[index]['quantity'] += 1;
-    });
+    if (resItem[index]['quantity'] > 0) {
+      setState(() {
+        resItem[index]['quantity'] += 1;
+      });
+    }
+
     // avisa a interface de calculo total
     calculateTotalSum();
     // fetch api
@@ -51,17 +55,19 @@ class _ItemBuildCartState extends State<ItemBuildCart> {
 
   Future decrementItem(index) async {
     // avisa a interface da quantidade de items
-    setState(() {
-      resItem[index]['quantity'] -= 1;
-    });
-    // avisa a interface de calculo total
-    calculateTotalSum();
-    // fetch api
-    await fetchRemoveCartItem(
-      context,
-      productId: resItem[index]['productId'].toString(),
-      provider: resItem[index]['provider'],
-    );
+    if (resItem[index]['quantity'] > 0) {
+      setState(() {
+        resItem[index]['quantity'] -= 1;
+      });
+      // avisa a interface de calculo total
+      calculateTotalSum();
+      // fetch api
+      await fetchRemoveCartItem(
+        context,
+        productId: resItem[index]['productId'].toString(),
+        provider: resItem[index]['provider'],
+      );
+    }
     // Se a quantidade de item for igual a zero
     if (resItem[index]['quantity'] == 0) {
       // fetch api
@@ -70,8 +76,13 @@ class _ItemBuildCartState extends State<ItemBuildCart> {
           provider: resItem[index]['provider']);
       // ===============================================
       // fetch api
+      // isLoadingAlert verifica se a mensagem ja foi enviada
+      // sendo que so pode ser enviada uma vez
       List temp = await fetchAllCartItem();
-      if (temp.isEmpty) {
+      if (temp.isEmpty && !isLoadingAlert) {
+        setState(() {
+          isLoadingAlert = true;
+        });
         showIsAlertTheCartIsEmpty(context);
       }
     }
@@ -118,12 +129,15 @@ class _ItemBuildCartState extends State<ItemBuildCart> {
                     return Container();
                   },
                 ),
-                resItem.isEmpty
+                isLoadingAlert
                     ? Container()
                     : buttonWithResult(constraints.maxWidth,
                         result: result,
                         text: 'Finalizar compra', ontap: () async {
-                        await fetchFinalizeCartItem(context);
+                        List temp = await fetchAllCartItem();
+                        if (temp.isEmpty && !isLoadingAlert) {
+                          await fetchFinalizeCartItem(context, result);
+                        }
                       })
               ],
             );

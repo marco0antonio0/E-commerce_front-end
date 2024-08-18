@@ -161,9 +161,11 @@ class _PageCartState extends State<PageCart> {
                                   color: Colors.black.withOpacity(.7)),
                             )),
                             const SizedBox(height: 40),
-                            ItemBuildCart(
-                              futureItems: items,
-                            ),
+                            items.isNotEmpty
+                                ? ItemBuildCart(
+                                    futureItems: items,
+                                  )
+                                : Container(),
                             const SizedBox(height: 10),
                           ],
                         ),

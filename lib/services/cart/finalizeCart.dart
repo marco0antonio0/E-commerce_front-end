@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 
-Future<bool> fetchFinalizeCartItem(
-  BuildContext context,
-) async {
+Future<bool> fetchFinalizeCartItem(BuildContext context, var un) async {
   var jwt = await getJwtToken();
   if (jwt == null) {
     return false;
@@ -23,7 +21,9 @@ Future<bool> fetchFinalizeCartItem(
   );
 
   if (response.statusCode == 201) {
-    context.go('/cart/sucess');
+    if (un > 0) {
+      context.go('/cart/sucess');
+    }
     return true;
   } else {
     return false;
