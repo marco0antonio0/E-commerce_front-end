@@ -34,27 +34,47 @@ class _ItemBuildCartState extends State<ItemBuildCart> {
     });
   }
 
-  incrementItem(index) {
+  Future incrementItem(index) async {
+    // avisa a interface da quantidade de items
     setState(() {
       resItem[index]['quantity'] += 1;
     });
+    // avisa a interface de calculo total
     calculateTotalSum();
+    // fetch api
+    await fetchAddCartItem(
+      context,
+      productId: resItem[index]['productId'].toString(),
+      provider: resItem[index]['provider'],
+    );
   }
 
-  decrementItem(index) async {
+  Future decrementItem(index) async {
+    // avisa a interface da quantidade de items
     setState(() {
       resItem[index]['quantity'] -= 1;
     });
+    // avisa a interface de calculo total
+    calculateTotalSum();
+    // fetch api
+    await fetchRemoveCartItem(
+      context,
+      productId: resItem[index]['productId'].toString(),
+      provider: resItem[index]['provider'],
+    );
+    // Se a quantidade de item for igual a zero
     if (resItem[index]['quantity'] == 0) {
+      // fetch api
       await fetchDeletCartItem(
           productId: resItem[index]['productId'],
           provider: resItem[index]['provider']);
+      // ===============================================
+      // fetch api
       List temp = await fetchAllCartItem();
       if (temp.isEmpty) {
         showIsAlertTheCartIsEmpty(context);
       }
     }
-    calculateTotalSum();
   }
 
   void calculateTotalSum() {
@@ -62,7 +82,6 @@ class _ItemBuildCartState extends State<ItemBuildCart> {
     for (var item in resItem) {
       sum += item['quantity'] * item['price'];
     }
-
     setState(() {
       result = sum;
     });
@@ -79,36 +98,24 @@ class _ItemBuildCartState extends State<ItemBuildCart> {
                 ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: widget.futureItems!.length,
+                  itemCount: resItem.length,
                   itemBuilder: (context, index) {
-                    // ItemEntity data = itemService.getItem(index);
                     var item = resItem[index];
                     if (item['quantity'] > 0) {
-                      return itemCart(constraints.maxWidth,
-                          add: () async {
-                            await fetchAddCartItem(
-                              context,
-                              productId: item['productId'].toString(),
-                              provider: item['provider'],
-                            );
-                            incrementItem(index);
-                          },
-                          remove: () async {
-                            await fetchRemoveCartItem(
-                              context,
-                              productId: item['productId'].toString(),
-                              provider: item['provider'],
-                            );
-                            await decrementItem(index);
-                          },
-                          quantidade: item['quantity'].toString(),
-                          subtext: item['price'].toString(),
-                          text: item['name'],
-                          ontap: () async {
-                            // context.go('/register');
-                          });
+                      return itemCart(
+                        constraints.maxWidth,
+                        add: () async {
+                          await incrementItem(index);
+                        },
+                        remove: () async {
+                          await decrementItem(index);
+                        },
+                        quantidade: item['quantity'].toString(),
+                        subtext: item['price'].toString(),
+                        text: item['name'],
+                      );
                     }
-                    return null;
+                    return Container();
                   },
                 ),
                 resItem.isEmpty

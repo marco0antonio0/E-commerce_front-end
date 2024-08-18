@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 Widget itemCart(
   double wscreen, {
-  required Function ontap,
   text = "Lorem ipsum dolor sit amet",
   subtext = "4.99",
   quantidade = "5",
