@@ -25,7 +25,6 @@ Future<bool> registerUser(
     body: body,
   );
 
-  print(response.body);
   if (response.statusCode == 201) {
     // Decodificar a resposta JSON
     Map<String, dynamic> jsonResponse = json.decode(response.body);

@@ -129,6 +129,68 @@ Necessario ter o docker compose e o flutter instalado
 5. **Acesse a Aplicação**:
    - A aplicação estará disponível em `http://localhost:3005` após o Docker Compose iniciar todos os serviços.
 
+## Paginas - web
+
+#
+
+#### Pagina Shop
+
+![img](imageReadme/pages/5.png)
+
+#
+
+#### Pagina Produto
+
+![img](imageReadme/pages/6.png)
+
+#
+
+#### Pagina Categorias
+
+![img](imageReadme/pages/7.png)
+
+#
+
+#### Pagina Login
+
+![img](imageReadme/pages/8.png)
+
+#
+
+#### Pagina Cadastro
+
+![img](imageReadme/pages/9.png)
+
+#
+
+#### Pagina Pesquisa de produtos
+
+![img](imageReadme/pages/10.png)
+
+#
+
+#### Pagina de Carrinho de compras
+
+![img](imageReadme/pages/11.png)
+
+#
+
+#### Pagina Usuario
+
+![img](imageReadme/pages/12.png)
+
+#
+
+#### Pagina Carrinho de compras concluidas
+
+![img](imageReadme/pages/13.png)
+
+#
+
+#### Pagina Logoff da conta
+
+![img](imageReadme/pages/14.png)
+
 ## Link para o Back-End
 
 O código fonte do back-end pode ser encontrado no seguinte repositório: [E-commerce Back-end](https://github.com/marco0antonio0/E-commerce_back-end).
